@@ -22,7 +22,6 @@
 							});
 						}
 						
-
 						var content = textarea.val().replace(/<|>/g, ' ').replace(/\n/g, '<br />');
 						if (twin.text() != content)
 						{				
