@@ -51,6 +51,7 @@
 					$twin.css(mimics[i].toString(),$textarea.css(mimics[i].toString()));
 				}
 				
+				
 				// Sets a given height and overflow state on the textarea
 				function setHeightAndOverflow(height, overflow){
 					curratedHeight = Math.floor(parseInt(height,10));
