@@ -72,8 +72,9 @@
 					
 					// Get curated content from the textarea.
 					var textareaContent = $textarea.val().replace(/&/g,'&amp;').replace(/  /g, '&nbsp;').replace(/<|>/g, '&gt;').replace(/\n/g, '<br />');
-
-					var twinContent = $twin.html();
+					
+					// Compare curated content with curated twin.
+					var twinContent = $twin.html().replace(/<br>/ig,'<br />');
 					
 					if(textareaContent+'&nbsp;' != twinContent){
 					
@@ -81,7 +82,7 @@
 						$twin.html(textareaContent+'&nbsp;');
 						
 						// Change textarea height if twin plus the height of one line differs more than 3 pixel from textarea height
-						if(Math.abs($twin.height()+lineHeight - $textarea.height()) > 3){
+						if(Math.abs($twin.height() + lineHeight - $textarea.height()) > 3){
 							
 							var goalheight = $twin.height()+lineHeight;
 							if(goalheight >= maxheight) {
@@ -103,6 +104,18 @@
 				
 				// Update textarea size on keyup
 				$textarea.keyup(function(){ update(); });
+				
+				// Compact textarea on blur
+				// Lets animate this....
+				$textarea.bind('blur',function(){
+					if($twin.height() < maxheight){
+						if($twin.height() > minheight) {
+							$textarea.height($twin.height());
+						} else {
+							$textarea.height(minheight);
+						}
+					}
+				});
 				
 				// And this line is to catch the browser paste event
 				$textarea.live('input paste',function(e){ setTimeout( update, 250); });				
