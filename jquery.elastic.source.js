@@ -28,6 +28,12 @@
 				'width',
 				'fontWeight'];
 			
+			var pseudoUUID = function(p) {
+				p = p || '';
+				var u = function() { return(((1+Math.random())*0x10000)|0).toString(16).substring(1); }
+				return(p+u()+u()+"-"+u()+"-"+u()+"-"+u()+"-"+u()+u()+u());
+			};
+
 			return this.each( function() {
 				
 				// Elastic only works on textareas
@@ -36,12 +42,26 @@
 				}
 				
 				var $textarea	=	jQuery(this),
-					$twin		=	jQuery('<div />').css({'position': 'absolute','display':'none','word-wrap':'break-word'}),
-					lineHeight	=	parseInt($textarea.css('line-height'),10) || parseInt($textarea.css('font-size'),'10'),
+					$twin		=	null,
+					twinId		=	$textarea.data('elastic-twin');
+					
+				if ( twinId ) {
+					$twin		=	jQuery('#'+twinId);
+					update();
+					return false;
+				}
+				
+					
+				var	lineHeight	=	parseInt($textarea.css('line-height'),10) || parseInt($textarea.css('font-size'),'10'),
 					minheight	=	parseInt($textarea.css('height'),10) || lineHeight*3,
 					maxheight	=	parseInt($textarea.css('max-height'),10) || Number.MAX_VALUE,
 					goalheight	=	0,
 					i 			=	0;
+				
+				twinId			=	pseudoUUID('elastic');
+				$twin			=	jQuery('<div />').css({'position': 'absolute','display':'none','word-wrap':'break-word'});
+				$twin.attr('id',twinId);
+				$textarea.data('elastic-twin',twinId);
 				
 				// Opera returns max-height of -1 if not set
 				if (maxheight < 0) { maxheight = Number.MAX_VALUE; }
