@@ -128,6 +128,9 @@
 				// Update textarea size on keyup
 				$textarea.keyup(function(){ update(); });
 				
+				// Define a custom event to allow manual updating
+				$textarea.bind('elasticupdate', function(){ update(); });
+				
 				// And this line is to catch the browser paste event
 				$textarea.live('input paste',function(e){ setTimeout( update, 250); });				
 				
