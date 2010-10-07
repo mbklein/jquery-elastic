@@ -105,18 +105,6 @@
 				// Update textarea size on keyup
 				$textarea.keyup(function(){ update(); });
 				
-				// Compact textarea on blur
-				// Lets animate this....
-				$textarea.bind('blur',function(){
-					if($twin.height() < maxheight){
-						if($twin.height() > minheight) {
-							$textarea.height($twin.height());
-						} else {
-							$textarea.height(minheight);
-						}
-					}
-				});
-				
 				// And this line is to catch the browser paste event
 				$textarea.live('input paste',function(e){ setTimeout( update, 250); });				
 				
