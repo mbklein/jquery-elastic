@@ -96,8 +96,11 @@
 					// Compare curated content with curated twin.
 					var twinContent = $twin.html().replace(/<br>/ig,'<br />');
 					
-					if(textareaContent+'&nbsp;' != twinContent){
+					if((textareaContent+'&nbsp;' != twinContent) || ($textarea.width() != $twin.width())){
 					
+						// Set twin to the same width as the textarea
+						$twin.width($textarea.width());
+						
 						// Add an extra white space so new rows are added when you are at the end of a row.
 						$twin.html(textareaContent+'&nbsp;');
 						
